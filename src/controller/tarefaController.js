@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { listarTarefas, inserir,tarefasFinalizadas } from "../repository/tarefaRepository.js";
+import { listarTarefas, inserir,tarefasFinalizadas,alterar,apagar } from "../repository/tarefaRepository.js";
 
 let endpoints = Router();
 
@@ -10,9 +10,11 @@ endpoints.post('/tarefa/inserir', async (req, resp) => {
 })
 
 endpoints.put('/tarefa/alterar', async (req, resp) => {
-    let tarefa = req.body;
-    let dados = await tarefasFinalizadas(tarefa) 
-    resp.send(dados) 
+    let id = req.query.id;
+    let tarefa = req.query.tarefa;
+
+    let dados = await alterar(tarefa, id);
+    resp.send('Tarefa Alterada!!');
 })
 
 endpoints.get('/tarefas/finalizada', async(req,resp) =>{
@@ -28,5 +30,11 @@ endpoints.get('/tarefas', async(req,resp) =>{
     
     
 })
+
+endpoints.delete('/tarefa', async (req,resp) =>{
+    let id = req.query.id;
+    let dados = await apagar(id);
+    resp.send('Tarefa Apagada com sucesso!!')
+});
 
 export default endpoints;

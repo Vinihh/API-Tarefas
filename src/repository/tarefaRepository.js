@@ -26,12 +26,20 @@ export async function tarefasFinalizadas(){
     return dados
 }
 
-export async function alterar(tarefa){
-    let sql = 'UPDATE tb_tarefa SET ds_tarefa = ? WHERE id = ?';
-    let resp = await conexao.query(sql, [tarefa.ds,tarefa.id]); 
-    let dados = resp[0];
+export async function alterar(tarefa,id){
+    let sql = 'UPDATE tb_tarefa SET ds_tarefa = ? WHERE id_tarefa = ?';
+    let resp = await conexao.query(sql, [tarefa, id]);
 
+    let dados = resp[0];
     return dados;
+}
+
+export async function apagar(id){
+    let sql = 'delete from tb_tarefa where id_tarefa = ?';
+    let resp = await conexao.query(sql , [id]);
+
+    let dados = resp[0];
+    return dados
 }
 
 
